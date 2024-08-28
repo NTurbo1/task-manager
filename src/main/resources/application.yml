@@ -4,4 +4,4 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://${DATABASE.HOST}:${DATABASE.PORT}/${DATABASE.NAME}
+      uri: ${DATASOURCE.URI}
