@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.Set;
+
 @Data
 @Document(collection = "users")
 public class User {
@@ -20,4 +22,7 @@ public class User {
 
     @Field
     private String email;
+
+    @Field
+    private Set<String> taskIds;
 }
