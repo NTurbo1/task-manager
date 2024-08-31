@@ -4,4 +4,4 @@ spring:
 
   data:
     mongodb:
-      uri: ${DATASOURCE.URI}
+      uri: ${DATASOURCE_URI}
