@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: service-discovery-server
+  config:
+    import: optional:configserver:http://${APP_SERVER_HOST}:8888
