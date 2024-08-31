@@ -1,35 +1,26 @@
-# Project: Task Management API
+# Project: Task Manager
 
-## Features
-- **User Authentication**:
-  - **Description:** Users should be able to sign up, log in, and manage their profiles.
-    - **Methods:** *Checked if implemented*
-      - [ ] OAuth 2.0
+## Services
+- **User service**:
+  - **Responsibilities:** Manages user registration, authentication/authorization, and profile management.
 
-- **Task CRUD Operations:** *Checked if implemented*
-  - [ ] Allow users to create tasks with details like title, description, due date, priority, and status (e.g., to-do, in-progress, completed).
-  - [ ] Implement endpoints to update task details.
-          Allow users to delete tasks.
-          Fetch tasks based on various criteria like status, due date, priority, etc.
+- **Task service:**
+  - **Responsibilities:** Handles creation, updating, deletion, and management of tasks.
 
-- **Task Categories/Projects:** *Checked if implemented*
-  - [ ] Enable users to organize tasks into categories or projects. Each category/project can have its own set of tasks.
-  - [ ] Implement endpoints to create, update, and delete categories/projects.
+- **Notification service:**
+  - **Responsibilities:** Sends notifications to users about upcoming tasks, deadlines, and project updates.
 
-- **Task Comments:** *Checked if implemented*
-  - [ ] Allow users to add comments to tasks. Implement a sub-document structure in MongoDB to store comments within the task documents.
+- **Analytics service:**
+  - **Responsibilities:** Provides insights and analytics about user productivity, task completion rates, and project progress.
 
-- **Task Reminders:** *Checked if implemented*
-  - [ ] Implement a feature that sends email reminders to users for tasks that are nearing their due date.
+- **API Gateway:**
+  - **Responsibilities:** Serves as a single entry point for all the microservices, handles routing, authentication, and rate limiting.
 
-- **Task History/Logs:** *Checked if implemented*
-  - [ ] Track changes to tasks, such as status updates or edits, and store this history. Implement a change log feature that users can view to see the history of their tasks.
+- **Service discovery server:**
+  - **Responsibilities:** Maintains a registry of available microservices and their instances.
 
-- **Reports/Analytics:** *Checked if implemented* 
-  - [ ] Provide basic analytics, such as the number of tasks completed over time or tasks grouped by priority or status.
-                      Generate reports on user productivity, showing how many tasks were completed on time, overdue, etc.
-
-## Tech Stack:
-- **Backend:** Java 17, Spring Boot 3
-- **Database:** MongoDB 
+## Overall tech Stack:
+- **Backend:** Java 17, Spring Boot 3, Spring Cloud, Spring Data Jpa, Spring Data MongoDB.
+- **Database:** PostgreSQL, MongoDB, Redis 
 - **Testing:** JUnit 5, Mockito
+- **Deployment:** Docker, Kubernetes
