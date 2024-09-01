@@ -5,6 +5,11 @@ data:
   mongodb:
     uri: ${DATASOURCE_URI}
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${APP_SERVER_HOST}:8761/eureka
+
 logging:
   file:
     name: logs/user-service.log
