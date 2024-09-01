@@ -20,7 +20,8 @@
 		<module>user-service</module>
 		<module>config-server</module>
 		<module>service-discovery-server</module>
-	</modules>
+        <module>task-service</module>
+    </modules>
 
 	<properties>
 		<java.version>17</java.version>
@@ -29,6 +30,9 @@
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<spring-boot-maven-plugin.version>3.3.3</spring-boot-maven-plugin.version>
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencyManagement>

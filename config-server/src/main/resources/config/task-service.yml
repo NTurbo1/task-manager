@@ -1,0 +1,15 @@
+server:
+  port: 8001
+
+data:
+  mongodb:
+    uri: ${DATASOURCE_URI}
+
+eureka:
+  client:
+    serviceUri:
+      defaultZone: http://${APP_SERVER_HOST}:8761/eureka
+
+logging:
+  file:
+    name: logs/task-service.log
