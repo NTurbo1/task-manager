@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: Task manager
-
-  data:
-    mongodb:
-      uri: ${DATASOURCE_URI}

@@ -1,0 +1,10 @@
+server:
+  port: 8000
+
+data:
+  mongodb:
+    uri: ${DATASOURCE_URI}
+
+logging:
+  file:
+    name: logs/user-service.log
