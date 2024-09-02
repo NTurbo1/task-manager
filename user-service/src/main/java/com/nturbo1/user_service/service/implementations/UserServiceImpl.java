@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        // TODO: implement
-        return null;
+        User savedUser = userRepository.save(userMapper.toModel(userDto));
+        return userMapper.toDto(savedUser);
     }
 
     @Override
