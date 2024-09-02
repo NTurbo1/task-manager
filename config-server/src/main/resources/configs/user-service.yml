@@ -1,9 +1,14 @@
 server:
   port: 8000
 
-data:
-  mongodb:
-    uri: ${DATASOURCE_URI}
+spring:
+  data:
+    mongodb:
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      host: ${DB_HOST}
+      port: ${DB_PORT}
+      database: ${DATABASE_NAME}
 
 eureka:
   client:
