@@ -2,7 +2,7 @@
 
 ## Services
 - [ ] **User service**:
-  - **Responsibilities:** Manages user registration, authentication/authorization, and profile management.
+  - **Responsibilities:** Manages user registration and profile management.
 
 - [ ] **Task service:**
   - **Responsibilities:** Handles creation, updating, deletion, and management of tasks.
@@ -14,7 +14,7 @@
   - **Responsibilities:** Provides insights and analytics about user productivity, task completion rates, and project progress.
 
 - [ ] **API Gateway server:**
-  - **Responsibilities:** Serves as a single entry point for all the microservices, handles routing, authentication, and rate limiting.
+  - **Responsibilities:** Serves as a single entry point for all the microservices, handles routing, authentication/authorization, load balancing, and rate limiting.
 
 - [x] **Service discovery server:**
   - **Responsibilities:** Maintains a registry of available microservices and their instances.
