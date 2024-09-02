@@ -10,5 +10,14 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
 
+  redis:
+    image: "redis:alpine"
+    container_name: redis_server
+    ports:
+      - ${REDIS_HOST_PORT}:${REDIS_CONTAINER_PORT}
+    volumes:
+      - redis:/data
+
 volumes:
   mongo:
+  redis:

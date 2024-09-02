@@ -7,6 +7,15 @@ spring:
       discovery:
         locator:
           enabled: true
+  data:
+    redis:
+      host: ${APP_SERVER_HOST}
+      port: ${SESSION_DB_PORT}
+  session:
+    redis:
+      flush-mode: immediate
+      namespace: spring:session
+      repository-type: default
 
 eureka:
   client:
