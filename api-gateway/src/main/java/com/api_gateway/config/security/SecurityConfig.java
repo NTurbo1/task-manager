@@ -28,7 +28,9 @@ public class SecurityConfig {
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
                         .pathMatchers(ApiUri.PUBLIC_URIS.toArray(new String[0])).permitAll()
                         .anyExchange().authenticated()
-                );
+                )
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+                .formLogin(ServerHttpSecurity.FormLoginSpec::disable);
 
         return http.build();
     }

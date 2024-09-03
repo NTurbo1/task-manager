@@ -3,3 +3,6 @@ spring:
     name: api-gateway
   config:
     import: optional:configserver:http://${APP_SERVER_HOST}:8888
+logging:
+  level:
+    org.springframework.security: trace
