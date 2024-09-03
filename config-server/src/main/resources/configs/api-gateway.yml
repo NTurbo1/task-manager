@@ -16,6 +16,7 @@ spring:
       flush-mode: immediate
       namespace: spring:session
       repository-type: default
+    timeout: 60m
 
 eureka:
   client:
