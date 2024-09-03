@@ -24,5 +24,8 @@ public class User {
     private String email;
 
     @Field
+    private String password;
+
+    @Field
     private Set<String> taskIds;
 }

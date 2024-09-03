@@ -2,6 +2,7 @@ package com.nturbo1.user_service.mapper;
 
 import com.nturbo1.user_service.controller.response.UserResponse;
 import com.nturbo1.user_service.model.collection.User;
+import com.nturbo1.user_service.service.dto.UserAuthDto;
 import com.nturbo1.user_service.service.dto.UserDto;
 import org.mapstruct.Mapper;
 
@@ -17,4 +18,6 @@ public interface UserMapper {
     List<UserDto> toDtoList(List<User> modelList);
 
     User toModel(UserDto dto);
+
+    UserAuthDto toAuthDto(User model);
 }

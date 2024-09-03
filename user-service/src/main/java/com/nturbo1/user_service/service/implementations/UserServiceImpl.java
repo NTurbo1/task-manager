@@ -5,6 +5,7 @@ import com.nturbo1.user_service.exception.util.ExceptionMessage;
 import com.nturbo1.user_service.mapper.UserMapper;
 import com.nturbo1.user_service.model.collection.User;
 import com.nturbo1.user_service.repository.UserRepository;
+import com.nturbo1.user_service.service.dto.UserAuthDto;
 import com.nturbo1.user_service.service.dto.UserDto;
 import com.nturbo1.user_service.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +33,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByEmail(String email) {
+    public UserAuthDto getUserAuthByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format(ExceptionMessage.USER_NOT_FOUND_BY_EMAIL, email)));
-        return userMapper.toDto(user);
+        return userMapper.toAuthDto(user);
     }
 
     @Override

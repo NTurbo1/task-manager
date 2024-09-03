@@ -1,5 +1,6 @@
 package com.nturbo1.user_service.service.interfaces;
 
+import com.nturbo1.user_service.service.dto.UserAuthDto;
 import com.nturbo1.user_service.service.dto.UserDto;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface UserService {
 
     UserDto getUserById(String id);
 
-    UserDto getUserByEmail(String email);
+    UserAuthDto getUserAuthByEmail(String email);
 
     UserDto createUser(UserDto userDto);
 

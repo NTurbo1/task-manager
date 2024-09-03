@@ -42,7 +42,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private URI createGetUserByEmailUri(String email) {
         return UriComponentsBuilder
-                .fromUriString("http://"+ appServerHost + ":" + userServicePort + "/api/v1/users")
+                .fromUriString("http://"+ appServerHost + ":" + userServicePort + "/api/v1/users/auth")
                 .queryParam("email", email)
                 .build()
                 .toUri();
