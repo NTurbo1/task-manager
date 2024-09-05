@@ -19,3 +19,5 @@ eureka:
 logging:
   file:
     name: logs/user-service.log
+  level:
+    com.nturbo1.user_service: debug

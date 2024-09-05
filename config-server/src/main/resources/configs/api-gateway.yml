@@ -35,3 +35,6 @@ eureka:
 logging:
   file:
     name: logs/api-gateway.log
+  level:
+    org.springframework.security: trace
+    com.nturbo1.api_gateway: debug

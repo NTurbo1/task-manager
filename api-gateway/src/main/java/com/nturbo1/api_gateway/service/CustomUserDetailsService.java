@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements ReactiveUserDetailsService {
     @Value("${USER_SERVICE_PORT}")
     private String userServicePort;
 
-    private final WebClient webClient = WebClient.builder().build();
+    private static final WebClient webClient = WebClient.builder().build();
 
     @Override
     public Mono<UserDetails> findByUsername(String username) throws UsernameNotFoundException {
@@ -36,8 +36,7 @@ public class CustomUserDetailsService implements ReactiveUserDetailsService {
     }
 
     private Mono<UserDetails> getUserByEmail(String email) {
-        return webClient
-                .get()
+        return webClient.get()
                 .uri(createGetUserByEmailUri(email))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()

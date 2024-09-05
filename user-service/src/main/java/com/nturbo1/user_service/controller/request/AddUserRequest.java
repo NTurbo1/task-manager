@@ -3,10 +3,9 @@ package com.nturbo1.user_service.controller.request;
 import lombok.Data;
 
 @Data
-public class UserRequest {
-
-    private String id;
+public class AddUserRequest {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
 }

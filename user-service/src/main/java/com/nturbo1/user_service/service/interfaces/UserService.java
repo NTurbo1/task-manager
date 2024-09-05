@@ -1,5 +1,6 @@
 package com.nturbo1.user_service.service.interfaces;
 
+import com.nturbo1.user_service.service.dto.AddUserDto;
 import com.nturbo1.user_service.service.dto.UserAuthDto;
 import com.nturbo1.user_service.service.dto.UserDto;
 
@@ -13,7 +14,7 @@ public interface UserService {
 
     UserAuthDto getUserAuthByEmail(String email);
 
-    UserDto createUser(UserDto userDto);
+    UserDto createUser(AddUserDto userDto);
 
     UserDto updateUser(UserDto userDto);
 

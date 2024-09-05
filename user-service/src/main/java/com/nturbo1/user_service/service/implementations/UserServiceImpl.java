@@ -5,6 +5,7 @@ import com.nturbo1.user_service.exception.util.ExceptionMessage;
 import com.nturbo1.user_service.mapper.UserMapper;
 import com.nturbo1.user_service.model.collection.User;
 import com.nturbo1.user_service.repository.UserRepository;
+import com.nturbo1.user_service.service.dto.AddUserDto;
 import com.nturbo1.user_service.service.dto.UserAuthDto;
 import com.nturbo1.user_service.service.dto.UserDto;
 import com.nturbo1.user_service.service.interfaces.UserService;
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public UserDto createUser(AddUserDto userDto) {
         log.debug("UserServiceImpl.createUser(UserDto) ------- UserDto: {}", userDto);
         User savedUser = userRepository.save(userMapper.toModel(userDto));
         log.debug("UserServiceImpl.createUser(UserDto) ------- saved User model: {}", savedUser);

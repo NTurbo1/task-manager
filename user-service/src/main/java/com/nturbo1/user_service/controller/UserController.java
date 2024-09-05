@@ -1,9 +1,8 @@
 package com.nturbo1.user_service.controller;
 
-import com.nturbo1.user_service.controller.request.UserRequest;
+import com.nturbo1.user_service.controller.request.AddUserRequest;
 import com.nturbo1.user_service.controller.response.UserResponse;
 import com.nturbo1.user_service.mapper.UserMapper;
-import com.nturbo1.user_service.model.collection.User;
 import com.nturbo1.user_service.repository.UserRepository;
 import com.nturbo1.user_service.service.dto.UserAuthDto;
 import com.nturbo1.user_service.service.dto.UserDto;
@@ -48,10 +47,10 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
-        log.debug("UserController.createUser(UserRequest) ------- UserRequest: {}", userRequest);
-        UserDto newUserDto = userService.createUser(userMapper.toDto(userRequest));
-        log.debug("UserController.createUser(UserRequest) ------- newly created UserDto: {}", newUserDto);
+    public ResponseEntity<UserResponse> createUser(@RequestBody AddUserRequest addUserRequest) {
+        log.debug("UserController.createUser(AddUserRequest) ------- AddUserRequest: {}", addUserRequest);
+        UserDto newUserDto = userService.createUser(userMapper.toDto(addUserRequest));
+        log.debug("UserController.createUser(AddUserRequest) ------- newly created UserDto: {}", newUserDto);
 
         return ResponseEntity.ok(userMapper.toResponse(newUserDto));
     }
