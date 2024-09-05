@@ -39,13 +39,15 @@ public class UserServiceImpl implements UserService {
         log.debug("UserServiceImpl.getUserAuthByEmail(String email) ------- Email: {}", email);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format(ExceptionMessage.USER_NOT_FOUND_BY_EMAIL, email)));
-        log.debug("UserServiceImpl.getUserAuthByEmail(String email) ------- user: {}", user);
+        log.debug("UserServiceImpl.getUserAuthByEmail(String email) ------- found User model: {}", user);
         return userMapper.toAuthDto(user);
     }
 
     @Override
     public UserDto createUser(UserDto userDto) {
+        log.debug("UserServiceImpl.createUser(UserDto) ------- UserDto: {}", userDto);
         User savedUser = userRepository.save(userMapper.toModel(userDto));
+        log.debug("UserServiceImpl.createUser(UserDto) ------- saved User model: {}", savedUser);
         return userMapper.toDto(savedUser);
     }
 
