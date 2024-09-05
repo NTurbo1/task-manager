@@ -9,6 +9,7 @@ spring:
       host: ${DB_HOST}
       port: ${DB_PORT}
       database: ${DATABASE_NAME}
+      authentication-database: admin
 
 eureka:
   client:

@@ -1,21 +1,18 @@
-package com.api_gateway.dto;
+package com.nturbo1.api_gateway.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-@Setter
-@Getter
-public class UserDto implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
-    private String email;
-    private String password;
+    private final UserDto userDto;
+
+    public CustomUserDetails(UserDto userDto) {
+        this.userDto = userDto;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -24,11 +21,11 @@ public class UserDto implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return userDto.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return userDto.getEmail();
     }
 }

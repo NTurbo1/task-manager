@@ -1,4 +1,4 @@
-package com.api_gateway.config.security.util;
+package com.nturbo1.api_gateway.config.security.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -9,6 +9,6 @@ import java.util.Set;
 public class ApiUri {
 
     public static final Set<String> PUBLIC_URIS = Set.of(
-            "/api/v1/login", "/api/v1/register"
+            "/api/v1/auth/login", "/api/v1/auth/register"
     );
 }

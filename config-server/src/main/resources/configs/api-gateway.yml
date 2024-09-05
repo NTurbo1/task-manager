@@ -7,6 +7,15 @@ spring:
       discovery:
         locator:
           enabled: true
+      routes:
+        - id: api-gateway
+          uri: lb:http://API-GATEWAY
+          predicates:
+            - Path=/api/v1/gateway/**
+        - id: user-service
+          uri: lb:http://USER-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
   data:
     redis:
       host: ${APP_SERVER_HOST}

@@ -1,4 +1,4 @@
-package com.api_gateway.exception.util;
+package com.nturbo1.api_gateway.exception.util;
 
 import lombok.Getter;
 

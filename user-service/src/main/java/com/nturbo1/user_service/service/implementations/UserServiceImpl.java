@@ -9,12 +9,14 @@ import com.nturbo1.user_service.service.dto.UserAuthDto;
 import com.nturbo1.user_service.service.dto.UserDto;
 import com.nturbo1.user_service.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -34,8 +36,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserAuthDto getUserAuthByEmail(String email) {
+        log.debug("UserServiceImpl.getUserAuthByEmail(String email) ------- Email: {}", email);
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format(ExceptionMessage.USER_NOT_FOUND_BY_EMAIL, email)));
+        log.debug("UserServiceImpl.getUserAuthByEmail(String email) ------- user: {}", user);
         return userMapper.toAuthDto(user);
     }
 
