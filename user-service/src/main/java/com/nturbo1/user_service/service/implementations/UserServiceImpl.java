@@ -53,14 +53,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto) {
-        // TODO: implement
-        return null;
+    public UserDto updateUser(String userId, UserDto userDto) {
+        log.debug("UserServiceImpl.updateUser(UserDto) ------- UserDto: {}", userDto);
+        User user = findUserByIdOrElseThrow(userId);
+        log.debug("UserServiceImpl.updateUser(UserDto) ------- found user: {}", user);
+        User updatedUser = userRepository.save(userMapper.updateFromDto(userDto, user));
+        log.debug("UserServiceImpl.updateUser(UserDto) ------- updatedUser: {}", updatedUser);
+        User updatedPersistedUser = userRepository.save(updatedUser);
+        log.debug("UserService.updateUser(UserDto) ------- updatedPersistedUser: {}", updatedPersistedUser);
+
+        return userMapper.toDto(updatedPersistedUser);
     }
 
     @Override
     public UserDto deleteUser(String id) {
         // TODO: implements
         return null;
+    }
+
+    private User findUserByIdOrElseThrow(String id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(ExceptionMessage.USER_NOT_FOUND_BY_ID, id)));
     }
 }
