@@ -1,9 +1,15 @@
 server:
   port: 8001
 
-data:
-  mongodb:
-    uri: ${DATASOURCE_URI}
+spring:
+  data:
+    mongodb:
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      host: ${DB_HOST}
+      port: ${DB_PORT}
+      database: ${DATABASE_NAME}
+      authentication-database: admin
 
 eureka:
   client:
@@ -13,3 +19,5 @@ eureka:
 logging:
   file:
     name: logs/task-service.log
+  level:
+    com.nturbo1.user_service: debug

@@ -26,7 +26,7 @@ public class TaskController {
     private final TaskService taskService;
     private final TaskMapper taskMapper;
 
-    @GetMapping("/tasks/user/{userId}}")
+    @GetMapping("/tasks/user/{userId}")
     public ResponseEntity<List<TaskResponse>> getAllUserTasks(@PathVariable String userId) {
         List<TaskResponse> allUserTasks = taskMapper.toResponseList(
                 taskService.getAllUserTasks(userId)
