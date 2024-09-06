@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,5 +67,13 @@ public class UserController {
         log.debug("UserController.updateUser(UpdateUserRequest) ------- updated UserDto: {}", updatedUserDto);
 
         return ResponseEntity.ok(userMapper.toResponse(updatedUserDto));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+        log.debug("UserController.deleteUser(String userId) ------- user id: {}", userId);
+        userService.deleteUser(userId);
+
+        return ResponseEntity.noContent().build();
     }
 }

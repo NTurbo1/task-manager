@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserById(String id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format(ExceptionMessage.USER_NOT_FOUND_BY_ID, id)));
+
         return userMapper.toDto(user);
     }
 
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format(ExceptionMessage.USER_NOT_FOUND_BY_EMAIL, email)));
         log.debug("UserServiceImpl.getUserAuthByEmail(String email) ------- found User model: {}", user);
+
         return userMapper.toAuthDto(user);
     }
 
@@ -49,6 +51,7 @@ public class UserServiceImpl implements UserService {
         log.debug("UserServiceImpl.createUser(UserDto) ------- UserDto: {}", userDto);
         User savedUser = userRepository.save(userMapper.toModel(userDto));
         log.debug("UserServiceImpl.createUser(UserDto) ------- saved User model: {}", savedUser);
+
         return userMapper.toDto(savedUser);
     }
 
@@ -66,9 +69,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto deleteUser(String id) {
-        // TODO: implements
-        return null;
+    public void deleteUser(String id) {
+        log.debug("UserServiceImpl.deleteUser(String id) ------- user id: {}", id);
+        User user = findUserByIdOrElseThrow(id);
+        log.debug("UserServiceImpl.deleteUser(String id) ------- found user: {}", user);
+        userRepository.delete(user);
     }
 
     private User findUserByIdOrElseThrow(String id) {
