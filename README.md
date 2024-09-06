@@ -1,7 +1,7 @@
 # Project: Task Manager
 
 ## Services
-- [ ] **User service**:
+- [x] **User service**:
   - **Responsibilities:** Manages user data CRUD and profile management.
 
 - [ ] **Task service:**
