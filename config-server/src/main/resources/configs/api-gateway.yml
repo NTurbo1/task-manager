@@ -16,6 +16,10 @@ spring:
           uri: lb:http://USER-SERVICE
           predicates:
             - Path=/api/v1/users/**
+        - id: task-service
+          uri: lb:http://TASK-SERVICE
+          predicates:
+            - Path=/api/v1/tasks/**
   data:
     redis:
       host: ${APP_SERVER_HOST}
