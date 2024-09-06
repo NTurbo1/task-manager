@@ -1,7 +1,12 @@
 package com.nturbo1.task_service.controller.response;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Getter
+@Setter
 public class TaskResponse {
 
     private String id;
@@ -15,4 +20,6 @@ public class TaskResponse {
     private LocalDate dueDate;
 
     private String priority;
+
+    private String assigneeUserId;
 }

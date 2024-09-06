@@ -20,4 +20,6 @@ public class TaskDto {
     private LocalDate dueDate;
 
     private String priority;
+
+    private String assigneeUserId;
 }
