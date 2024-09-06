@@ -1,10 +1,15 @@
 package com.nturbo1.task_service.exception.util;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ExceptionMessage {
+@Getter
+public enum ExceptionMessage {
 
-    public static final String TASK_NOT_FOUND_BY_ID = "User with id %s not found";
+    TASK_NOT_FOUND_BY_ID("User with id %s not found");
+
+    private final String message;
+
+    ExceptionMessage(String message) {
+        this.message = message;
+    }
 }

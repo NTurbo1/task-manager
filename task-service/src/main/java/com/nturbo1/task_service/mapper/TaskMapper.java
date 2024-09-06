@@ -5,6 +5,8 @@ import com.nturbo1.task_service.controller.response.TaskResponse;
 import com.nturbo1.task_service.model.collection.Task;
 import com.nturbo1.task_service.service.dto.TaskDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -20,4 +22,7 @@ public interface TaskMapper {
     TaskDto toDto(TaskRequest request);
 
     Task toModel(TaskDto dto);
+
+    @Mapping(source = "id", target = "id", ignore = true)
+    Task updateFromDto(TaskDto dto, @MappingTarget Task model);
 }

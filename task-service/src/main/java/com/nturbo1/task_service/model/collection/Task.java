@@ -28,4 +28,7 @@ public class Task {
 
     @Field
     private String priority;
+
+    @Field
+    private String assigneeUserId;
 }
