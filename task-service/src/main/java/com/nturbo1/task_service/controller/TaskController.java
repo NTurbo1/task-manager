@@ -49,7 +49,7 @@ public class TaskController {
         return ResponseEntity.ok(taskMapper.toResponse(updatedTask));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/tasks/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable String taskId) {
         taskService.deleteTask(taskId);
 
