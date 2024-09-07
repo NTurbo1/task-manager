@@ -4,7 +4,7 @@
 - [x] **User service**:
   - **Responsibilities:** Manages user data CRUD and profile management.
 
-- [ ] **Task service:**
+- [x] **Task service:**
   - **Responsibilities:** Handles creation, updating, deletion, and management of tasks.
 
 - [ ] **Notification service:**
