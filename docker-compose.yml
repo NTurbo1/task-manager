@@ -3,12 +3,14 @@ services:
     image: mongo
     container_name: mongo_db
     ports:
-      - ${MONGODB_HOST_PORT}:27017
+      - ${MONGODB_HOST_PORT}:${MONGODB_CONTAINER_PORT}
     volumes:
       - mongo:/data
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    networks:
+      - app-network
 
   redis:
     image: "redis:alpine"
@@ -17,7 +19,33 @@ services:
       - ${REDIS_HOST_PORT}:${REDIS_CONTAINER_PORT}
     volumes:
       - redis:/data
+    networks:
+      - app-network
+
+  rabbitmq:
+    container_name: "rabbit-mq"
+    image: "rabbitmq:management"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - ${RABBITMQ_HOST_PORT}:${RABBITMQ_CONTAINER_PORT}  # Messaging port
+      - ${RABBITMQ_MANAGEMENT_HOST_PORT}:${RABBITMQ_MANAGEMENT_CONTAINER_PORT}  # Management UI port
+    volumes:
+      - rabbitmq:/data
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - app-network
 
 volumes:
   mongo:
   redis:
+  rabbitmq:
+
+networks:
+  app-network:
+    driver: bridge
