@@ -1,6 +1,13 @@
 server:
   port: 8002
 
+spring:
+  rabbitmq:
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    host: ${APP_SERVER_HOST}
+    port: ${RABBITMQ_PORT}
+
 eureka:
   client:
     serviceUri:
@@ -11,3 +18,11 @@ logging:
     name: logs/notification-service.log
   level:
     com.nturbo1.notification_service: debug
+
+# env variables
+rabbitmq:
+  queue:
+    name: task-due-queue
+  topic-exchange:
+    task-due:
+      name: task-due-exchange
