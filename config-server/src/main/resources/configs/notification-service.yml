@@ -1,0 +1,13 @@
+server:
+  port: 8002
+
+eureka:
+  client:
+    serviceUri:
+      defaultZone: http://${APP_SERVER_HOST}:8761/eureka
+
+logging:
+  file:
+    name: logs/notification-service.log
+  level:
+    com.nturbo1.notification_service: debug
