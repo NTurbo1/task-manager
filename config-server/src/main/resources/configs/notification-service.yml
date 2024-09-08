@@ -26,3 +26,5 @@ rabbitmq:
   topic-exchange:
     task-due:
       name: task-due-exchange
+  routing-key:
+    task-due: task.due.key

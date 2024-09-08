@@ -19,6 +19,8 @@ public class RabbitMQConfig {
     private String taskDueTopicExchange;
     @Value("${rabbitmq.queue.name}")
     private String taskDueQueue;
+    @Value("${rabbitmq.routing-key.task-due}")
+    private String taskDueRoutingKey;
 
     @Bean
     public Queue taskDueQueue() {
@@ -32,7 +34,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding taskDueBinding(Queue taskDueQueue, TopicExchange taskDueTopicExchange) {
-        return BindingBuilder.bind(taskDueQueue).to(taskDueTopicExchange).with("task.due.key");
+        return BindingBuilder.bind(taskDueQueue).to(taskDueTopicExchange).with(taskDueRoutingKey);
     }
 
     @Bean
