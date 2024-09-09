@@ -30,6 +30,7 @@
                Spring Data (Jpa, MongoDB, Redis), 
                Spring Web, 
                Spring WebFlux
-- **Database:** PostgreSQL, MongoDB, Redis 
+- **Database:** PostgreSQL, MongoDB, Redis
+- **Message Brokers/Queues:** RabbitMQ
 - **Testing:** JUnit 5, Mockito
 - **Deployment:** Docker, Kubernetes
