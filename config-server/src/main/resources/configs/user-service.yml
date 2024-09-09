@@ -16,6 +16,9 @@ eureka:
     serviceUrl:
       defaultZone: http://${APP_SERVER_HOST}:8761/eureka
 
+mongock:
+  migration-scan-package: com.nturbo1.user_service
+
 logging:
   file:
     name: logs/user-service.log
