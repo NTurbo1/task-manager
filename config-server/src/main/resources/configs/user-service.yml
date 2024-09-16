@@ -33,6 +33,6 @@ springdoc:
 
 openapi:
   service:
-    title: ${spring.application.name} doc
+    title: User service documentation
     version: 1.0.0
     url: http://${APP_SERVER_HOST}:8222
