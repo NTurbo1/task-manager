@@ -69,8 +69,8 @@ public class UserController {
         return ResponseEntity.ok(userMapper.toResponse(updatedUserDto));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("userId") String userId) {
         log.debug("UserController.deleteUser(String userId) ------- user id: {}", userId);
         userService.deleteUser(userId);
 
