@@ -28,4 +28,19 @@ public class GlobalControllerExceptionHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseBody);
     }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<ErrorResponseBody> handleUnknownException(HttpServletRequest request, Exception e) {
+        ErrorResponseBody responseBody = ErrorResponseBody.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .error(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(responseBody);
+    }
 }
