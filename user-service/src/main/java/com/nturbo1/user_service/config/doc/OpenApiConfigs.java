@@ -18,9 +18,15 @@ public class OpenApiConfigs {
     public OpenAPI customOpenAPI(@Value("${openapi.service.title}") String serviceTitle,
                                  @Value("${openapi.service.version}") String serviceVersion,
                                  @Value("${openapi.service.url}") String serviceUrl) {
-
         return new OpenAPI()
                 .servers(List.of(new Server().url(serviceUrl)))
-                .info(new Info().title(serviceTitle).version(serviceVersion));
+                .info(new Info()
+                        .title(serviceTitle)
+                        .version(serviceVersion)
+                        .summary("Documentation User Service v" + serviceVersion)
+                        .description("This is User Service API. It contains endpoints for retrieving, creating, updating, " +
+                                "and deleting user data.")
+                );
+
     }
 }

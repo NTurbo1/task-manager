@@ -56,3 +56,8 @@ springdoc:
         name: API Gateway Service
       - url: /v3/api-docs/user-service
         name: User Service
+
+openapi:
+  service:
+    title: API Gateway documentation
+    version: 1.0.0
