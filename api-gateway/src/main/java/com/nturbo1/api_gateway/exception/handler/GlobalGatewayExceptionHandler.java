@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 @Component
 @Slf4j
 public class GlobalGatewayExceptionHandler implements ErrorWebExceptionHandler {
@@ -19,9 +22,13 @@ public class GlobalGatewayExceptionHandler implements ErrorWebExceptionHandler {
         exchange.getResponse().setStatusCode(ExceptionHttpStatusCodeMapper.getHttpStatus(ex));
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
-        String errorMessage = "{\"error\": \"" + ex.getMessage() + "\"}";
+        ErrorResponseBody responseBody = new ErrorResponseBody(
+                LocalDateTime.now(),
+                Objects.requireNonNull(exchange.getResponse().getStatusCode()).toString(),
+                ex.getMessage(),
+                exchange.getRequest().getPath().toString());
 
-        byte[] bytes = errorMessage.getBytes();
+        byte[] bytes = responseBody.toString().getBytes();
         return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(bytes)));
     }
 }
