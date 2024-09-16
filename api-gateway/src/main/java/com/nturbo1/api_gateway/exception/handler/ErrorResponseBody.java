@@ -1,15 +1,17 @@
 package com.nturbo1.api_gateway.exception.handler;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
+@Builder
 public class ErrorResponseBody {
 
     private LocalDateTime timestamp;
     private String status;
-    private String message;
+    private String error;
     private String path;
 
     @Override
@@ -18,7 +20,7 @@ public class ErrorResponseBody {
         return "{" +
                     "\"timestamp\": \"" + timestamp + "\"," +
                     "\"status\": \"" + status + "\"," +
-                    "\"message\": \"" + message + "\"," +
+                    "\"error\": \"" + error + "\"," +
                     "\"path\": \"" + path + "\"" +
                 "}";
     }

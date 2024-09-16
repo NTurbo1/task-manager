@@ -22,13 +22,22 @@ public class GlobalGatewayExceptionHandler implements ErrorWebExceptionHandler {
         exchange.getResponse().setStatusCode(ExceptionHttpStatusCodeMapper.getHttpStatus(ex));
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
-        ErrorResponseBody responseBody = new ErrorResponseBody(
-                LocalDateTime.now(),
-                Objects.requireNonNull(exchange.getResponse().getStatusCode()).toString(),
-                ex.getMessage(),
-                exchange.getRequest().getPath().toString());
+        ErrorResponseBody responseBody = createErrorResponseBody(exchange, ex);
 
         byte[] bytes = responseBody.toString().getBytes();
         return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(bytes)));
+    }
+
+    private ErrorResponseBody createErrorResponseBody(ServerWebExchange exchange, Throwable ex) {
+
+        return ErrorResponseBody.builder()
+                .timestamp(LocalDateTime.now())
+                .status(
+                        // Get the http code only (toString format - "HTTP_CODE HTTP_NAME")
+                        Objects.requireNonNull(exchange.getResponse().getStatusCode()).toString().split(" ")[0]
+                )
+                .error(ex.getMessage())
+                .path(exchange.getRequest().getPath().toString())
+                .build();
     }
 }
