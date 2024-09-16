@@ -15,7 +15,7 @@ spring:
         - id: user-service
           uri: lb:http://USER-SERVICE
           predicates:
-            - Path=/api/v1/users/**
+            - Path=/api/v1/users/**, /user-service/v3/api-docs
         - id: task-service
           uri: lb:http://TASK-SERVICE
           predicates:
@@ -42,3 +42,17 @@ logging:
   level:
     org.springframework.security: trace
     com.nturbo1.api_gateway: debug
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+      - url: /user-service/v3/api-docs
+        name: User Service
