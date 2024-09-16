@@ -15,7 +15,7 @@ spring:
         - id: user-service
           uri: lb:http://USER-SERVICE
           predicates:
-            - Path=/api/v1/users/**, /user-service/v3/api-docs
+            - Path=/api/v1/users/**, /v3/api-docs/user-service
         - id: task-service
           uri: lb:http://TASK-SERVICE
           predicates:
@@ -54,5 +54,5 @@ springdoc:
     urls:
       - url: /v3/api-docs
         name: API Gateway Service
-      - url: /user-service/v3/api-docs
+      - url: /v3/api-docs/user-service
         name: User Service

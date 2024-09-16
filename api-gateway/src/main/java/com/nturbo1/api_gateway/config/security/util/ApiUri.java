@@ -9,6 +9,10 @@ import java.util.Set;
 public class ApiUri {
 
     public static final Set<String> PUBLIC_URIS = Set.of(
-            "/api/v1/auth/login", "/api/v1/auth/register"
+            // Auth endpoints
+            "/api/v1/auth/login", "/api/v1/auth/register",
+            // Swagger/OpenApi endpoints
+            "/swagger-ui.html", "/swagger-ui/**", "/openapi/**", "/webjars/**", "/v3/api-docs/**",
+            "/user-service/v3/api-docs/**"
     );
 }

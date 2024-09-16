@@ -16,7 +16,7 @@ public class OpenApiConfigs {
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder
                 .routes()
-                .route(r -> r.path("/user-service/v3/api-docs").and().method(HttpMethod.GET).uri("lb:http://USER-SERVICE"))
+                .route(r -> r.path("/v3/api-docs/user-service").and().method(HttpMethod.GET).uri("lb:http://USER-SERVICE"))
                 .build();
     }
 
