@@ -32,10 +32,7 @@ public class GlobalGatewayExceptionHandler implements ErrorWebExceptionHandler {
 
         return ErrorResponseBody.builder()
                 .timestamp(LocalDateTime.now())
-                .status(
-                        // Get the http code only (toString format - "HTTP_CODE HTTP_NAME")
-                        Objects.requireNonNull(exchange.getResponse().getStatusCode()).toString().split(" ")[0]
-                )
+                .status(Objects.requireNonNull(exchange.getResponse().getStatusCode()).value())
                 .error(ex.getMessage())
                 .path(exchange.getRequest().getPath().toString())
                 .build();
