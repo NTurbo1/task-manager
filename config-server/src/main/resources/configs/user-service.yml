@@ -24,3 +24,15 @@ logging:
     name: logs/user-service.log
   level:
     com.nturbo1.user_service: debug
+
+springdoc:
+  api-docs:
+    path: /${spring.application.name}/v3/api-docs
+  swagger-ui:
+    path: /${spring.application.name}/swagger-ui.html
+
+openapi:
+  service:
+    title: ${spring.application.name} doc
+    version: 1.0.0
+    url: http://${APP_SERVER_HOST}:8222
