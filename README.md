@@ -27,7 +27,7 @@ using Typescript and React for this api.
 
 ## Overall tech Stack:
 - **Java 17**: Core programming language 
-- Spring Boot (v3.3.3): Backend framework for building microservices.
+- **Spring Boot (v3.3.3):** Backend framework for building microservices.
 - **Spring Cloud Gateway:** API Gateway for routing and filtering requests.
 - **Spring Cloud Config**: Central configurations storage server.
 - **Spring Cloud Netflix Eureka:** Service discovery and registration. 
