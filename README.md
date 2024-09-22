@@ -35,6 +35,7 @@ using Typescript and React for this api.
 - **Spring Web:** Rest API, MVC, framework for building web apps.
 - **MongoDB:** NoSQL database for storing user and task data.
 - **Redis**: NoSQL database for storing user login session.
+- **Mongock:** Database migration tool for MongoDB.
 - **RabbitMQ:** Message Queue (async communication between the microservices).
 - **Docker:** Containerization for deployment and local development.
 - **Testing:** JUnit 5, Mockito
