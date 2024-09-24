@@ -1,0 +1,13 @@
+server:
+  port: 8003
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${APP_SERVER_HOST}:8761/eureka
+
+logging:
+  file:
+    name: logs/auth-service.log
+  level:
+    com.nturbo1.auth_service: debug
