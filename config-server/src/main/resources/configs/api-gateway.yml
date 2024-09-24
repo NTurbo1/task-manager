@@ -11,7 +11,11 @@ spring:
         - id: api-gateway
           uri: lb:http://API-GATEWAY
           predicates:
-            - Path=/api/v1/gateway/**, /api/v1/auth/**
+            - Path=/api/v1/gateway/**
+        - id: auth-service
+          uri: lb:http://AUTH-SERVICE
+          predicates:
+            - Path=/api/v1/auth/**, /v3/api-docs/auth-service
         - id: user-service
           uri: lb:http://USER-SERVICE
           predicates:
@@ -54,6 +58,8 @@ springdoc:
     urls:
       - url: /v3/api-docs
         name: API Gateway Service
+      - url: /v3/api-docs/auth-service
+        name: Authentication Service
       - url: /v3/api-docs/user-service
         name: User Service
 
