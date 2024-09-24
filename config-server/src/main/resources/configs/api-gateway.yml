@@ -24,16 +24,16 @@ spring:
           uri: lb:http://TASK-SERVICE
           predicates:
             - Path=/api/v1/tasks/**
-  data:
-    redis:
-      host: ${APP_SERVER_HOST}
-      port: ${SESSION_DB_PORT}
-  session:
-    redis:
-      flush-mode: immediate
-      namespace: spring:session
-      repository-type: default
-    timeout: 60m
+#  data:
+#    redis:
+#      host: ${APP_SERVER_HOST}
+#      port: ${SESSION_DB_PORT}
+#  session:
+#    redis:
+#      flush-mode: immediate
+#      namespace: spring:session
+#      repository-type: default
+#    timeout: 60m
 
 eureka:
   client:

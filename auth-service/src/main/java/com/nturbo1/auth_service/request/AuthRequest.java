@@ -1,4 +1,4 @@
-package com.nturbo1.api_gateway.request;
+package com.nturbo1.auth_service.request;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.nturbo1.api_gateway.response;
+package com.nturbo1.auth_service.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
