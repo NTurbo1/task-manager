@@ -95,3 +95,16 @@ To start all services with Docker, use ```docker-compose up```.
 This project uses Swagger/OpenAPI tools for api documentation. 
 After starting all the services, you can access the swagger ui on 
 ```http://localhost:8222/swagger-ui.html```.
+
+## Roles and Permissions Matrix
+
+| Functionality | Admin | Project Manager |    Team Member    | Guest/Client |
+|---------------|:-----:|:---------------:|:-----------------:|:------------:|
+| User CRUD     |   +   |        -        |         -         |      -       |
+| Project CRUD  |   +   |        +        |    ONLY: Read     |  ONLY: Read  |
+| Task CREATE   |   +   |        +        |         -         |      -       |
+| Task READ     |   +   |        +        |         +         |      -       |
+| Task UPDATE   |   +   |        +        | ONLY: task status |      -       |
+| Task DELETE   |   +   |        +        |         -         |      -       |
+
+
