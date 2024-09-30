@@ -15,6 +15,10 @@
     <name>Auth service</name>
     <description>Auth service api</description>
 
+    <properties>
+        <keycloak.version>25.0.6</keycloak.version>
+    </properties>
+
     <dependencies>
         <!-- Spring Boot dependencies -->
 
@@ -34,6 +38,13 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- Keycloak dependencies -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-admin-client</artifactId>
+            <version>${keycloak.version}</version>
         </dependency>
 
         <!-- Testing dependencies -->
