@@ -24,6 +24,12 @@ spring:
           uri: lb:http://TASK-SERVICE
           predicates:
             - Path=/api/v1/tasks/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${APP_SERVER_HOST}:9090/realms/task-manager-api
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 #  data:
 #    redis:
 #      host: ${APP_SERVER_HOST}
