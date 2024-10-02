@@ -23,3 +23,12 @@ openapi:
     title: Authentication service documentation
     version: 1.0.0
     url: http://${APP_SERVER_HOST}:8222
+
+keycloak:
+  server:
+    port: 9090
+  realm: task-manager-app
+  client:
+    client-id: task-manager-api
+    client-secret: BotPRmQBHUVuIIkH7qj0WRKTIdM5asPa
+    grant-type: client_credentials
