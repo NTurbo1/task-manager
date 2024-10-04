@@ -2,6 +2,8 @@ package com.nturbo1.auth_service.service.interfaces;
 
 import com.nturbo1.auth_service.request.RegisterKeycloakUserRequest;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * Provides methods for interacting with a Keycloak server.
  *
@@ -10,10 +12,10 @@ import com.nturbo1.auth_service.request.RegisterKeycloakUserRequest;
 public interface KeycloakAdminService {
 
     /**
-     * Create a new user in the Keycloak server.
+     * Create a new user in the Keycloak server asynchronously.
      *
      * @param registerKeycloakUserRequest request body that contains necessary user information.
-     * @return True if the user is created and false otherwise.
+     * @return future value of true if the user is created and false otherwise.
      */
-    boolean createUser(RegisterKeycloakUserRequest registerKeycloakUserRequest);
+    CompletableFuture<Boolean> createUser(RegisterKeycloakUserRequest registerKeycloakUserRequest);
 }

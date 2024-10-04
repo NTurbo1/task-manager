@@ -4,6 +4,7 @@ import com.nturbo1.auth_service.exception.exceptions.KeycloakAdminClientExceptio
 import com.nturbo1.auth_service.exception.util.ExceptionMessage;
 import com.nturbo1.auth_service.request.RegisterKeycloakUserRequest;
 import com.nturbo1.auth_service.service.interfaces.KeycloakAdminService;
+import jakarta.annotation.PostConstruct;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
@@ -11,15 +12,18 @@ import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
 public class KeycloakAdminServiceImpl implements KeycloakAdminService {
 
-    private final Keycloak keycloak;
+    private Keycloak keycloak;
 
     @Value("${APP_SERVER_HOST}")
     private String appServerHost;
@@ -34,9 +38,18 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
     @Value("${keycloak.client.grant-type}")
     private String grantType;
 
-    public KeycloakAdminServiceImpl() {
+    @PostConstruct
+    public void init() {
+        String keycloakServerUrl = UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host(appServerHost)
+                .port(keycloakServerPort)
+                .toUriString();
+
+        log.info("Initializing KeycloakAdminServiceImpl with serverUrl: {}", keycloakServerUrl);
+
         this.keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://" + appServerHost + ":" + keycloakServerPort)
+                .serverUrl(keycloakServerUrl)
                 .realm(realm)
                 .clientId(clientId)
                 .clientSecret(clientSecret)
@@ -45,9 +58,13 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
     }
 
     @Override
-    public boolean createUser(RegisterKeycloakUserRequest registerKeycloakUserRequest) {
+    @Async
+    public CompletableFuture<Boolean> createUser(RegisterKeycloakUserRequest registerKeycloakUserRequest) {
         UserRepresentation user = createUserRepresentationFrom(registerKeycloakUserRequest);
+        return CompletableFuture.supplyAsync(() -> isKeycloakUserCreated(user));
+    }
 
+    private boolean isKeycloakUserCreated(UserRepresentation user) {
         try (Response response = keycloak
                 .realm(realm)
                 .users()
@@ -58,7 +75,6 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
             log.error("Error creating user with Keycloak admin client", e);
             throw new KeycloakAdminClientException(ExceptionMessage.KEYCLOAK_ADMIN_CREATE_USER_FAILED.getMessage());
         }
-
     }
 
     private UserRepresentation createUserRepresentationFrom(RegisterKeycloakUserRequest userRequest) {
