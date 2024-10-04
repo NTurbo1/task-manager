@@ -32,3 +32,7 @@ keycloak:
     client-id: task-manager-api
     client-secret: BotPRmQBHUVuIIkH7qj0WRKTIdM5asPa
     grant-type: client_credentials
+
+user:
+  server:
+    port: 8000
