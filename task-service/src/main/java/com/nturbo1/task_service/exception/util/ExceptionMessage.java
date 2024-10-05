@@ -4,12 +4,11 @@ import lombok.Getter;
 
 @Getter
 public enum ExceptionMessage {
+  TASK_NOT_FOUND_BY_ID("User with id %s not found");
 
-    TASK_NOT_FOUND_BY_ID("User with id %s not found");
+  private final String message;
 
-    private final String message;
-
-    ExceptionMessage(String message) {
-        this.message = message;
-    }
+  ExceptionMessage(String message) {
+    this.message = message;
+  }
 }

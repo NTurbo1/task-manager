@@ -109,6 +109,25 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
+			<!-- Code Formatting -->
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>2.41.1</version>
+				<configuration>
+					<java>
+						<googleJavaFormat />
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
