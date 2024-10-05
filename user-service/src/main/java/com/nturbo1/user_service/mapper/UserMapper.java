@@ -22,6 +22,7 @@ public interface UserMapper {
     UserDto toDto(User model);
     List<UserDto> toDtoList(List<User> modelList);
 
+    @Mapping(source = "userId", target = "id")
     AddUserDto toDto(AddUserRequest request);
 
     UserDto toDto(UpdateUserRequest request);
