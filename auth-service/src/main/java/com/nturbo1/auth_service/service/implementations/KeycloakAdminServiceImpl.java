@@ -3,6 +3,7 @@ package com.nturbo1.auth_service.service.implementations;
 import com.nturbo1.auth_service.exception.exceptions.KeycloakAdminClientException;
 import com.nturbo1.auth_service.exception.util.ExceptionMessage;
 import com.nturbo1.auth_service.request.RegisterKeycloakUserRequest;
+import com.nturbo1.auth_service.response.CreateKeycloakUserResponse;
 import com.nturbo1.auth_service.service.interfaces.KeycloakAdminService;
 import jakarta.annotation.PostConstruct;
 import jakarta.ws.rs.core.Response;
@@ -59,18 +60,37 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
 
     @Override
     @Async
-    public CompletableFuture<Boolean> createUser(RegisterKeycloakUserRequest registerKeycloakUserRequest) {
+    public CompletableFuture<CreateKeycloakUserResponse> createUser(RegisterKeycloakUserRequest registerKeycloakUserRequest) {
         UserRepresentation user = createUserRepresentationFrom(registerKeycloakUserRequest);
-        return CompletableFuture.supplyAsync(() -> isKeycloakUserCreated(user));
+        return CompletableFuture.supplyAsync(() -> createUserInKeycloak(user));
     }
 
-    private boolean isKeycloakUserCreated(UserRepresentation user) {
+    @Override
+    @Async
+    public void deleteUser(String userId) {
+        try (Response response = keycloak
+                .realm(realm)
+                .users()
+                .delete(userId)
+        ) {
+            if (response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL) {
+                log.info("Successfully deleted Keycloak user with userID: {}", userId);
+            }
+            //TODO: handle the failure case
+        }
+    }
+
+    private CreateKeycloakUserResponse createUserInKeycloak(UserRepresentation user) {
         try (Response response = keycloak
                 .realm(realm)
                 .users()
                 .create(user)
         ) {
-            return response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL;
+            log.info("Keycloak create user response status: {}", response.getStatus());
+            return new CreateKeycloakUserResponse(
+                    extractUserIdFrom(response),
+                    response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL
+            );
         } catch (Exception e) {
             log.error("Error creating user with Keycloak admin client", e);
             throw new KeycloakAdminClientException(ExceptionMessage.KEYCLOAK_ADMIN_CREATE_USER_FAILED.getMessage());
@@ -94,5 +114,17 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
         passwordCred.setTemporary(false);
 
         return passwordCred;
+    }
+
+    private String extractUserIdFrom(Response response) {
+        String location = response.getHeaderString("Location");
+
+        if (location != null) {
+            String[] urlParts = location.split("/");
+            return urlParts[urlParts.length - 1];
+        }
+
+        //TODO: handle the null case.
+        return null;
     }
 }

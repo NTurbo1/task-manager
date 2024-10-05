@@ -1,6 +1,7 @@
 package com.nturbo1.auth_service.service.interfaces;
 
 import com.nturbo1.auth_service.request.RegisterKeycloakUserRequest;
+import com.nturbo1.auth_service.response.CreateKeycloakUserResponse;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,7 +16,9 @@ public interface KeycloakAdminService {
      * Create a new user in the Keycloak server asynchronously.
      *
      * @param registerKeycloakUserRequest request body that contains necessary user information.
-     * @return future value of true if the user is created and false otherwise.
+     * @return important information about the response and the user.
      */
-    CompletableFuture<Boolean> createUser(RegisterKeycloakUserRequest registerKeycloakUserRequest);
+    CompletableFuture<CreateKeycloakUserResponse> createUser(RegisterKeycloakUserRequest registerKeycloakUserRequest);
+
+    void deleteUser(String userId);
 }
