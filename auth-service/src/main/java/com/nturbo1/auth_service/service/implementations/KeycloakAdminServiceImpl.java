@@ -85,7 +85,7 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
 
   private CreateKeycloakUserResponse createUserInKeycloak(UserRepresentation user) {
     try (Response response = keycloak.realm(realm).users().create(user)) {
-      log.info("Keycloak create user response status: {}", response.getStatus());
+      log.info("Keycloak user created with username: {}", user.getUsername());
       return new CreateKeycloakUserResponse(
           extractUserIdFrom(response),
           response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL);

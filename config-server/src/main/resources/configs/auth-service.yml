@@ -30,7 +30,7 @@ keycloak:
   realm: task-manager-app
   client:
     client-id: task-manager-api
-    client-secret: BotPRmQBHUVuIIkH7qj0WRKTIdM5asPa
+    client-secret: BotPRmQBHUVuIIkH7qj0WRKTIdM5asPa # should be hidden or kept in env variables in real world projects.
     grant-type: client_credentials
 
 user:
