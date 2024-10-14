@@ -2,9 +2,8 @@ package com.nturbo1.auth_service.service.interfaces;
 
 import com.nturbo1.auth_service.request.RegisterKeycloakUserRequest;
 import com.nturbo1.auth_service.response.CreateKeycloakUserResponse;
-import org.keycloak.representations.idm.UserRepresentation;
-
 import java.util.concurrent.CompletableFuture;
+import org.keycloak.representations.idm.UserRepresentation;
 
 /**
  * Provides methods for interacting with a Keycloak server.

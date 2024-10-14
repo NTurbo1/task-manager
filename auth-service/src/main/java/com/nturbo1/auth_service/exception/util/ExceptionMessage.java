@@ -9,7 +9,8 @@ public enum ExceptionMessage {
   REST_CLIENT_WENT_WRONG("Something went wrong during sending RestClient %s method to uri %s"),
   KEYCLOAK_ADMIN_CREATE_USER_FAILED("Keycloak admin client: create user by username %s failed"),
   KEYCLOAK_USER_NOT_FOUND_BY_USERNAME("Keycloak user not found by username %s"),
-  KEYCLOAK_ADMIN_DELETE_USER_FAILED("Keycloak admin client: delete user by user id %s failed."),;
+  KEYCLOAK_ADMIN_DELETE_USER_FAILED("Keycloak admin client: delete user by user id %s failed."),
+  ;
 
   private final String message;
 

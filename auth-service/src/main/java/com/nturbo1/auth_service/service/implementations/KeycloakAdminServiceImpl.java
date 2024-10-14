@@ -80,39 +80,41 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
   @Override
   @Async
   @Retryable(
-          retryFor = KeycloakAdminClientException.class,
-          maxAttempts = 5,
-          backoff = @Backoff(delay = 2000, multiplier = 2)
-  )
+      retryFor = KeycloakAdminClientException.class,
+      maxAttempts = 5,
+      backoff = @Backoff(delay = 2000, multiplier = 2))
   public void deleteUser(String userId) {
     try (Response response = keycloak.realm(realm).users().delete(userId)) {
       if (response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL) {
-        log.info("Successfully deleted Keycloak user with userID: {} at attempt {}", userId,
-                Objects.requireNonNull(RetrySynchronizationManager.getContext()).getRetryCount());
+        log.info(
+            "Successfully deleted Keycloak user with userID: {} at attempt {}",
+            userId,
+            Objects.requireNonNull(RetrySynchronizationManager.getContext()).getRetryCount());
       } else {
-        log.error("Failed to delete Keycloak user with userID: {} at attempt {}", userId,
-                Objects.requireNonNull(RetrySynchronizationManager.getContext()).getRetryCount());
+        log.error(
+            "Failed to delete Keycloak user with userID: {} at attempt {}",
+            userId,
+            Objects.requireNonNull(RetrySynchronizationManager.getContext()).getRetryCount());
         throw new KeycloakAdminClientException(
-                String.format(ExceptionMessage.KEYCLOAK_ADMIN_DELETE_USER_FAILED.getMessage(), userId)
-        );
+            String.format(ExceptionMessage.KEYCLOAK_ADMIN_DELETE_USER_FAILED.getMessage(), userId));
       }
     } catch (Exception e) {
-      log.error("An error occurred during deleting a user by user id {}: {}", userId, e.getMessage());
+      log.error(
+          "An error occurred during deleting a user by user id {}: {}", userId, e.getMessage());
       throw e;
     }
   }
 
   @Override
   public UserRepresentation getUserByUsername(String username) {
-    List<UserRepresentation> foundUsers =  keycloak.realm(realm).users().search(username);
+    List<UserRepresentation> foundUsers = keycloak.realm(realm).users().search(username);
 
     if (foundUsers != null && !foundUsers.isEmpty()) {
       return foundUsers.get(0);
     }
 
     throw new ResourceNotFoundException(
-            String.format(ExceptionMessage.KEYCLOAK_USER_NOT_FOUND_BY_USERNAME.getMessage(), username)
-    );
+        String.format(ExceptionMessage.KEYCLOAK_USER_NOT_FOUND_BY_USERNAME.getMessage(), username));
   }
 
   private CreateKeycloakUserResponse createUserInKeycloak(UserRepresentation user) {
@@ -124,8 +126,8 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
     } catch (Exception e) {
       log.error("Error creating user with Keycloak admin client", e);
       throw new KeycloakAdminClientException(
-          String.format(ExceptionMessage.KEYCLOAK_ADMIN_CREATE_USER_FAILED.getMessage(), user.getUsername())
-      );
+          String.format(
+              ExceptionMessage.KEYCLOAK_ADMIN_CREATE_USER_FAILED.getMessage(), user.getUsername()));
     }
   }
 
