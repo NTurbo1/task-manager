@@ -9,6 +9,7 @@ import com.nturbo1.auth_service.service.interfaces.KeycloakAdminService;
 import jakarta.annotation.PostConstruct;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
@@ -16,6 +17,9 @@ import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.retry.support.RetrySynchronizationManager;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -75,12 +79,26 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
 
   @Override
   @Async
+  @Retryable(
+          retryFor = KeycloakAdminClientException.class,
+          maxAttempts = 5,
+          backoff = @Backoff(delay = 2000, multiplier = 2)
+  )
   public void deleteUser(String userId) {
     try (Response response = keycloak.realm(realm).users().delete(userId)) {
       if (response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL) {
-        log.info("Successfully deleted Keycloak user with userID: {}", userId);
+        log.info("Successfully deleted Keycloak user with userID: {} at attempt {}", userId,
+                Objects.requireNonNull(RetrySynchronizationManager.getContext()).getRetryCount());
+      } else {
+        log.error("Failed to delete Keycloak user with userID: {} at attempt {}", userId,
+                Objects.requireNonNull(RetrySynchronizationManager.getContext()).getRetryCount());
+        throw new KeycloakAdminClientException(
+                String.format(ExceptionMessage.KEYCLOAK_ADMIN_DELETE_USER_FAILED.getMessage(), userId)
+        );
       }
-      // TODO: handle the failure case
+    } catch (Exception e) {
+      log.error("An error occurred during deleting a user by user id {}: {}", userId, e.getMessage());
+      throw e;
     }
   }
 
@@ -106,7 +124,8 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
     } catch (Exception e) {
       log.error("Error creating user with Keycloak admin client", e);
       throw new KeycloakAdminClientException(
-          ExceptionMessage.KEYCLOAK_ADMIN_CREATE_USER_FAILED.getMessage());
+          String.format(ExceptionMessage.KEYCLOAK_ADMIN_CREATE_USER_FAILED.getMessage(), user.getUsername())
+      );
     }
   }
 
