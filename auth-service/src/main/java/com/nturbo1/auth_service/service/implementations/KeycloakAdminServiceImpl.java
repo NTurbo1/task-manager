@@ -1,6 +1,7 @@
 package com.nturbo1.auth_service.service.implementations;
 
 import com.nturbo1.auth_service.exception.exceptions.KeycloakAdminClientException;
+import com.nturbo1.auth_service.exception.exceptions.ResourceNotFoundException;
 import com.nturbo1.auth_service.exception.util.ExceptionMessage;
 import com.nturbo1.auth_service.request.RegisterKeycloakUserRequest;
 import com.nturbo1.auth_service.response.CreateKeycloakUserResponse;
@@ -83,11 +84,24 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
     }
   }
 
+  @Override
+  public UserRepresentation getUserByUsername(String username) {
+    List<UserRepresentation> foundUsers =  keycloak.realm(realm).users().search(username);
+
+    if (foundUsers != null && !foundUsers.isEmpty()) {
+      return foundUsers.get(0);
+    }
+
+    throw new ResourceNotFoundException(
+            String.format(ExceptionMessage.KEYCLOAK_USER_NOT_FOUND_BY_USERNAME.getMessage(), username)
+    );
+  }
+
   private CreateKeycloakUserResponse createUserInKeycloak(UserRepresentation user) {
     try (Response response = keycloak.realm(realm).users().create(user)) {
       log.info("Keycloak user created with username: {}", user.getUsername());
       return new CreateKeycloakUserResponse(
-          extractUserIdFrom(response),
+          getUserId(response, user.getUsername()),
           response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL);
     } catch (Exception e) {
       log.error("Error creating user with Keycloak admin client", e);
@@ -123,7 +137,18 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
       return urlParts[urlParts.length - 1];
     }
 
-    // TODO: handle the null case.
     return null;
+  }
+
+  // Retrieves a user id by the username if the user id can't be extracted from the response.
+  private String getUserId(Response response, String username) {
+    String userId = extractUserIdFrom(response);
+
+    if (userId != null) {
+      return userId;
+    }
+
+    UserRepresentation savedUser = getUserByUsername(username);
+    return savedUser.getId();
   }
 }

@@ -2,6 +2,8 @@ package com.nturbo1.auth_service.service.interfaces;
 
 import com.nturbo1.auth_service.request.RegisterKeycloakUserRequest;
 import com.nturbo1.auth_service.response.CreateKeycloakUserResponse;
+import org.keycloak.representations.idm.UserRepresentation;
+
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -21,4 +23,6 @@ public interface KeycloakAdminService {
       RegisterKeycloakUserRequest registerKeycloakUserRequest);
 
   void deleteUser(String userId);
+
+  UserRepresentation getUserByUsername(String username);
 }
