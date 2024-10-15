@@ -1,15 +1,26 @@
 package com.nturbo1.auth_service.service.implementations;
 
+import com.nturbo1.auth_service.exception.exceptions.KeycloakAdminClientException;
+import com.nturbo1.auth_service.exception.exceptions.RemoteInternalServiceException;
+import com.nturbo1.auth_service.exception.handler.ErrorResponseBody;
+import com.nturbo1.auth_service.exception.util.ExceptionMessage;
 import com.nturbo1.auth_service.request.AddUserRequest;
 import com.nturbo1.auth_service.service.interfaces.UserService;
+
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
   @Value("${user.server.port}")
@@ -24,16 +35,31 @@ public class UserServiceImpl implements UserService {
   }
 
   private boolean isUserCreated(AddUserRequest addUserRequest) {
-    return restClient
+      String uri = "http://localhost:" + userServicePort + "/api/v1/users";
+      log.info("Sending POST request to {} to create user {}", uri, addUserRequest);
+
+      return restClient
         .post()
-        .uri("http://localhost:" + userServicePort + "/api/v1/users")
+        .uri(uri)
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON)
         .body(addUserRequest)
-        .exchange(
-            (request, response) -> {
-              // TODO: handle possible exceptions
-              return response.getStatusCode().is2xxSuccessful();
-            });
+        .exchange((request, response) -> {
+              ErrorResponseBody responseBody = Objects.requireNonNull(response.bodyTo(ErrorResponseBody.class));
+              log.debug("Response body: {}", responseBody);
+
+              if (response.getStatusCode().is2xxSuccessful())  {
+                log.info("Successfully created user {} at {}", addUserRequest, request.getURI());
+                return true;
+              }
+
+              log.info("Failed to create user {} at {}", addUserRequest, request.getURI());
+              if (response.getStatusCode().is5xxServerError()) {
+                    throw new RemoteInternalServiceException(responseBody.getError());
+              } else {
+                  throw new ResponseStatusException(HttpStatusCode.valueOf(responseBody.getStatus()), responseBody.getError());
+              }
+            }
+            );
   }
 }
