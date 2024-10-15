@@ -13,20 +13,20 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-  @Bean
-  public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
+	@Bean
+	public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
 
-    http.csrf(ServerHttpSecurity.CsrfSpec::disable)
-        .authorizeExchange(
-            authorizeExchangeSpec ->
-                authorizeExchangeSpec
-                    .pathMatchers(ApiUri.PUBLIC_URIS.toArray(new String[0]))
-                    .permitAll()
-                    .anyExchange()
-                    .authenticated())
-        .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
-        .logout(ServerHttpSecurity.LogoutSpec::disable);
+		http.csrf(ServerHttpSecurity.CsrfSpec::disable)
+				.authorizeExchange(
+						authorizeExchangeSpec ->
+								authorizeExchangeSpec
+										.pathMatchers(ApiUri.PUBLIC_URIS.toArray(new String[0]))
+										.permitAll()
+										.anyExchange()
+										.authenticated())
+				.formLogin(ServerHttpSecurity.FormLoginSpec::disable)
+				.logout(ServerHttpSecurity.LogoutSpec::disable);
 
-    return http.build();
-  }
+		return http.build();
+	}
 }

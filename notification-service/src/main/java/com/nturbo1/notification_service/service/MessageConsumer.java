@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageConsumer {
 
-  public void consumeMessage(String message) {
-    log.debug("MessageConsumer.consumeMessage(String message) ------- message: {}", message);
-  }
+	public void consumeMessage(String message) {
+		log.debug("MessageConsumer.consumeMessage(String message) ------- message: {}", message);
+	}
 }

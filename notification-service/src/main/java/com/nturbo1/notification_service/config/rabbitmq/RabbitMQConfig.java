@@ -15,43 +15,43 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-  @Value("${rabbitmq.topic-exchange.task-due.name}")
-  private String taskDueTopicExchange;
+	@Value("${rabbitmq.topic-exchange.task-due.name}")
+	private String taskDueTopicExchange;
 
-  @Value("${rabbitmq.queue.name}")
-  private String taskDueQueue;
+	@Value("${rabbitmq.queue.name}")
+	private String taskDueQueue;
 
-  @Value("${rabbitmq.routing-key.task-due}")
-  private String taskDueRoutingKey;
+	@Value("${rabbitmq.routing-key.task-due}")
+	private String taskDueRoutingKey;
 
-  @Bean
-  public Queue taskDueQueue() {
-    return new Queue(taskDueQueue, true);
-  }
+	@Bean
+	public Queue taskDueQueue() {
+		return new Queue(taskDueQueue, true);
+	}
 
-  @Bean
-  public TopicExchange taskDueTopicExchange() {
-    return new TopicExchange(taskDueTopicExchange);
-  }
+	@Bean
+	public TopicExchange taskDueTopicExchange() {
+		return new TopicExchange(taskDueTopicExchange);
+	}
 
-  @Bean
-  public Binding taskDueBinding(Queue taskDueQueue, TopicExchange taskDueTopicExchange) {
-    return BindingBuilder.bind(taskDueQueue).to(taskDueTopicExchange).with(taskDueRoutingKey);
-  }
+	@Bean
+	public Binding taskDueBinding(Queue taskDueQueue, TopicExchange taskDueTopicExchange) {
+		return BindingBuilder.bind(taskDueQueue).to(taskDueTopicExchange).with(taskDueRoutingKey);
+	}
 
-  @Bean
-  public SimpleMessageListenerContainer taskDueContainer(
-      ConnectionFactory connectionFactory, MessageListenerAdapter messageListenerAdapter) {
-    SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-    container.setConnectionFactory(connectionFactory);
-    container.setQueueNames(taskDueQueue);
-    container.setMessageListener(messageListenerAdapter);
+	@Bean
+	public SimpleMessageListenerContainer taskDueContainer(
+			ConnectionFactory connectionFactory, MessageListenerAdapter messageListenerAdapter) {
+		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+		container.setConnectionFactory(connectionFactory);
+		container.setQueueNames(taskDueQueue);
+		container.setMessageListener(messageListenerAdapter);
 
-    return container;
-  }
+		return container;
+	}
 
-  @Bean
-  public MessageListenerAdapter listenerAdapter(MessageConsumer messageConsumer) {
-    return new MessageListenerAdapter(messageConsumer, "consumeMessage");
-  }
+	@Bean
+	public MessageListenerAdapter listenerAdapter(MessageConsumer messageConsumer) {
+		return new MessageListenerAdapter(messageConsumer, "consumeMessage");
+	}
 }

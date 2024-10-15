@@ -9,9 +9,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AuthMapper {
 
-  @Mapping(source = "email", target = "username")
-  @Mapping(source = "email", target = "email")
-  RegisterKeycloakUserRequest toKeycloakUserRequest(RegisterUserRequest userRequest);
+	@Mapping(source = "email", target = "username")
+	@Mapping(source = "email", target = "email")
+	RegisterKeycloakUserRequest toKeycloakUserRequest(RegisterUserRequest userRequest);
 
-  AddUserRequest toAddUserRequest(RegisterUserRequest userRequest);
+	AddUserRequest toAddUserRequest(RegisterUserRequest userRequest);
 }

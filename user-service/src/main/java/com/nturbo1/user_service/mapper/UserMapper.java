@@ -7,31 +7,32 @@ import com.nturbo1.user_service.model.collection.User;
 import com.nturbo1.user_service.service.dto.AddUserDto;
 import com.nturbo1.user_service.service.dto.UserAuthDto;
 import com.nturbo1.user_service.service.dto.UserDto;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-  UserResponse toResponse(UserDto dto);
+	UserResponse toResponse(UserDto dto);
 
-  List<UserResponse> toResponseList(List<UserDto> dtoList);
+	List<UserResponse> toResponseList(List<UserDto> dtoList);
 
-  UserDto toDto(User model);
+	UserDto toDto(User model);
 
-  List<UserDto> toDtoList(List<User> modelList);
+	List<UserDto> toDtoList(List<User> modelList);
 
-  @Mapping(source = "userId", target = "id")
-  AddUserDto toDto(AddUserRequest request);
+	@Mapping(source = "userId", target = "id")
+	AddUserDto toDto(AddUserRequest request);
 
-  UserDto toDto(UpdateUserRequest request);
+	UserDto toDto(UpdateUserRequest request);
 
-  User toModel(AddUserDto dto);
+	User toModel(AddUserDto dto);
 
-  UserAuthDto toAuthDto(User model);
+	UserAuthDto toAuthDto(User model);
 
-  @Mapping(source = "id", target = "id", ignore = true)
-  User updateFromDto(UserDto dto, @MappingTarget User model);
+	@Mapping(source = "id", target = "id", ignore = true)
+	User updateFromDto(UserDto dto, @MappingTarget User model);
 }

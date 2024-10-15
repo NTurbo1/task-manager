@@ -10,15 +10,15 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @ChangeUnit(id = "create-roles-collection", order = "002", author = "nturbo1")
 public class CreateRolesCollectionChange {
 
-  private final MongoTemplate mongoTemplate;
+	private final MongoTemplate mongoTemplate;
 
-  @Execution
-  public void createRolesCollection() {
-    mongoTemplate.createCollection("roles");
-  }
+	@Execution
+	public void createRolesCollection() {
+		mongoTemplate.createCollection("roles");
+	}
 
-  @RollbackExecution
-  public void rollback() {
-    mongoTemplate.dropCollection("roles");
-  }
+	@RollbackExecution
+	public void rollback() {
+		mongoTemplate.dropCollection("roles");
+	}
 }
