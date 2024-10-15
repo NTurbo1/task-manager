@@ -25,6 +25,8 @@ public class AuthServiceImpl implements AuthService {
   public CompletableFuture<Boolean> registerUser(RegisterUserRequest registerUserRequest) {
     RegisterKeycloakUserRequest keycloakUserRequest =
         authMapper.toKeycloakUserRequest(registerUserRequest);
+
+    // Create user in the Keycloak server first to get the user id
     CreateKeycloakUserResponse keycloakUserCreated =
         keycloakAdminService.createUser(keycloakUserRequest).join();
 
