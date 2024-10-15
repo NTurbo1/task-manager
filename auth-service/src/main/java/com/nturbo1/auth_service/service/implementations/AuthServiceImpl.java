@@ -32,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
 				keycloakAdminService.createUser(keycloakUserRequest).join();
 
 		if (!keycloakUserCreated.created()) {
+			// TODO: Add a proper response body and response status to indicate the failure case
 			return CompletableFuture.completedFuture(false);
 		}
 
@@ -40,6 +41,8 @@ public class AuthServiceImpl implements AuthService {
 		boolean userCreated = userService.createUser(addUserRequest).join();
 
 		if (!userCreated) {
+			// TODO: this recovery logic doesn't work if the user server is down or an exception is thrown
+			//  instead of a boolean return value
 			deleteKeycloakUser(keycloakUserCreated.userID());
 			return CompletableFuture.completedFuture(false);
 		}

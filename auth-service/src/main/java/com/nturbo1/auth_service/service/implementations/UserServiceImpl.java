@@ -42,15 +42,19 @@ public class UserServiceImpl implements UserService {
 				.accept(MediaType.APPLICATION_JSON)
 				.body(addUserRequest)
 				.exchange((request, response) -> {
-							ErrorResponseBody responseBody = Objects.requireNonNull(response.bodyTo(ErrorResponseBody.class));
-							log.debug("Response body: {}", responseBody);
-
 							if (response.getStatusCode().is2xxSuccessful()) {
 								log.info("Successfully created user {} at {}", addUserRequest, request.getURI());
 								return true;
 							}
 
 							log.info("Failed to create user {} at {}", addUserRequest, request.getURI());
+
+							// TODO: org.springframework.http.converter.HttpMessageConversionException:
+							//  Type definition error://  [simple type, class com.nturbo1.auth_service.exception.handler.ErrorResponseBody]
+							//  is thrown in the next statement. Fix it.
+							ErrorResponseBody responseBody = Objects.requireNonNull(response.bodyTo(ErrorResponseBody.class));
+							log.debug("Error response body: {}", responseBody);
+
 							if (response.getStatusCode().is5xxServerError()) {
 								throw new RemoteInternalServiceException(responseBody.getError());
 							} else {

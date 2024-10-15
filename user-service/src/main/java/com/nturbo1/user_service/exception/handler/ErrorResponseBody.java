@@ -17,4 +17,23 @@ public class ErrorResponseBody {
 	private int status;
 	private String error;
 	private String path;
+
+	@Override
+	public String toString() {
+		// In JSON format
+		return "{"
+				+ "\"timestamp\": \""
+				+ timestamp
+				+ "\","
+				+ "\"status\": \""
+				+ status
+				+ "\","
+				+ "\"error\": \""
+				+ error
+				+ "\","
+				+ "\"path\": \""
+				+ path
+				+ "\""
+				+ "}";
+	}
 }
