@@ -9,4 +9,13 @@ public class RegisterKeycloakUserRequest {
 	private String username;
 	private String password;
 	private String email;
+
+	@Override
+	public String toString() {
+		return "RegisterKeycloakUserRequest{" +
+				"username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", email='" + email + '\'' +
+				'}';
+	}
 }
