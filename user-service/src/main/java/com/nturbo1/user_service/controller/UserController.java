@@ -8,6 +8,7 @@ import com.nturbo1.user_service.repository.UserRepository;
 import com.nturbo1.user_service.service.dto.UserAuthDto;
 import com.nturbo1.user_service.service.dto.UserDto;
 import com.nturbo1.user_service.service.interfaces.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -52,7 +53,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users")
-	public ResponseEntity<UserResponse> createUser(@RequestBody AddUserRequest addUserRequest) {
+	public ResponseEntity<UserResponse> createUser(@RequestBody @Valid AddUserRequest addUserRequest) {
 		log.debug(
 				"UserController.createUser(AddUserRequest) ------- AddUserRequest: {}", addUserRequest);
 		UserDto newUserDto = userService.createUser(userMapper.toDto(addUserRequest));
