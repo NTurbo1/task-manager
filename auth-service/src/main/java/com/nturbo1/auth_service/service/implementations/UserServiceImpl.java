@@ -1,9 +1,12 @@
 package com.nturbo1.auth_service.service.implementations;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nturbo1.auth_service.exception.exceptions.RemoteInternalServiceException;
 import com.nturbo1.auth_service.exception.handler.ErrorResponseBody;
 import com.nturbo1.auth_service.request.AddUserRequest;
 import com.nturbo1.auth_service.service.interfaces.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
@@ -13,10 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
 
@@ -24,6 +27,7 @@ public class UserServiceImpl implements UserService {
 	private int userServicePort;
 
 	private final RestClient restClient = RestClient.builder().build();
+	private final ObjectMapper objectMapper;
 
 	@Override
 	@Async
@@ -49,10 +53,7 @@ public class UserServiceImpl implements UserService {
 
 							log.info("Failed to create user {} at {}", addUserRequest, request.getURI());
 
-							// TODO: org.springframework.http.converter.HttpMessageConversionException:
-							//  Type definition error://  [simple type, class com.nturbo1.auth_service.exception.handler.ErrorResponseBody]
-							//  is thrown in the next statement. Fix it.
-							ErrorResponseBody responseBody = Objects.requireNonNull(response.bodyTo(ErrorResponseBody.class));
+							ErrorResponseBody responseBody = convertResponseBody(response);
 							log.debug("Error response body: {}", responseBody);
 
 							if (response.getStatusCode().is5xxServerError()) {
@@ -62,5 +63,10 @@ public class UserServiceImpl implements UserService {
 							}
 						}
 				);
+	}
+
+	private ErrorResponseBody convertResponseBody(RestClient.RequestHeadersSpec.ConvertibleClientHttpResponse response) throws JsonProcessingException {
+		String responseBody = response.bodyTo(String.class);
+		return objectMapper.readValue(responseBody, ErrorResponseBody.class);
 	}
 }
