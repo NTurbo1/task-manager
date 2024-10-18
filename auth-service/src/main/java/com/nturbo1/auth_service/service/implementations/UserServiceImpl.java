@@ -27,11 +27,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Async
-	public CompletableFuture<Boolean> createUser(AddUserRequest addUserRequest) {
+	public CompletableFuture<Boolean> createUser(AddUserRequest addUserRequest) throws RemoteInternalServiceException, ResponseStatusException {
 		return CompletableFuture.supplyAsync(() -> isUserCreated(addUserRequest));
 	}
 
-	private boolean isUserCreated(AddUserRequest addUserRequest) {
+	private boolean isUserCreated(AddUserRequest addUserRequest) throws RemoteInternalServiceException, ResponseStatusException {
 		String uri = "http://localhost:" + userServicePort + "/api/v1/users";
 		log.info("Sending POST request to {} to create user {}", uri, addUserRequest);
 

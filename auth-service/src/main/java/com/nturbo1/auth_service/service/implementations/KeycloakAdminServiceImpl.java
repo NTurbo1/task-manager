@@ -14,6 +14,7 @@ import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.retry.support.RetrySynchronizationManager;
@@ -84,7 +85,7 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
 			retryFor = KeycloakAdminClientException.class,
 			maxAttempts = 5,
 			backoff = @Backoff(delay = 2000, multiplier = 2))
-	public void deleteUser(String userId) {
+	public void deleteUser(String userId) { // TODO: Better replace it with a robust message broker like Kafka
 		try (Response response = keycloak.realm(realm).users().delete(userId)) {
 			if (response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL) {
 				log.info(
@@ -123,10 +124,16 @@ public class KeycloakAdminServiceImpl implements KeycloakAdminService {
 
 			if (response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL) {
 				log.info("Keycloak user created with username: {}", user.getUsername());
-				return new CreateKeycloakUserResponse(getUserId(response, user.getUsername()), true);
+				return new CreateKeycloakUserResponse(
+						getUserId(response, user.getUsername()),
+						true,
+						HttpStatus.valueOf(response.getStatus()));
 			} else {
 				log.info("Failed to create Keycloak user by username: {}", user.getUsername());
-				return new CreateKeycloakUserResponse(getUserId(response, user.getUsername()), false);
+				return new CreateKeycloakUserResponse(
+						getUserId(response, user.getUsername()),
+						false,
+						HttpStatus.valueOf(response.getStatus()));
 			}
 		} catch (Exception e) {
 			log.error("Error creating user with Keycloak admin client", e);
