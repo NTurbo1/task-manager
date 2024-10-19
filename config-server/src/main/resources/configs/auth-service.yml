@@ -29,8 +29,8 @@ keycloak:
     port: 9090
   realm: task-manager-app
   client:
-    client-id: task-manager-api
-    client-secret: BotPRmQBHUVuIIkH7qj0WRKTIdM5asPa # should be hidden or kept in env variables in real world projects.
+    client-id: ${KEYCLOAK_CLIENT_ID}
+    client-secret: ${KEYCLOAK_CLIENT_SECRET}
     grant-type: client_credentials
 
 user:
