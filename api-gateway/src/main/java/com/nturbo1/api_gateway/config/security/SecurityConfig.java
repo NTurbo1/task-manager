@@ -1,5 +1,6 @@
 package com.nturbo1.api_gateway.config.security;
 
+import com.nturbo1.api_gateway.config.security.oauth2.JwtConverter;
 import com.nturbo1.api_gateway.config.security.util.ApiUri;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+	private final JwtConverter jwtConverter;
+
 	@Bean
 	public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
 
@@ -24,6 +27,7 @@ public class SecurityConfig {
 										.permitAll()
 										.anyExchange()
 										.authenticated())
+				.oauth2ResourceServer(auth -> auth.jwt(token -> token.jwtAuthenticationConverter(jwtConverter)))
 				.formLogin(ServerHttpSecurity.FormLoginSpec::disable)
 				.logout(ServerHttpSecurity.LogoutSpec::disable);
 
