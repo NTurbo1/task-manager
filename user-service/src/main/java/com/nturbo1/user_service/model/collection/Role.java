@@ -12,8 +12,8 @@ import java.util.Set;
 @ToString
 public class Role {
 
-    @Id
-    private String name;
+	@Id
+	private String name;
 
-    private Set<String> authorities;
+	private Set<String> authorities;
 }

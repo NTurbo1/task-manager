@@ -1,0 +1,38 @@
+server:
+  port: 8003
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${APP_SERVER_HOST}:8761/eureka
+
+logging:
+  file:
+    name: logs/auth-service.log
+  level:
+    com.nturbo1.auth_service: debug
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs/${spring.application.name}
+  swagger-ui:
+    path: /${spring.application.name}/swagger-ui.html
+
+openapi:
+  service:
+    title: Authentication service documentation
+    version: 1.0.0
+    url: http://${APP_SERVER_HOST}:8222
+
+keycloak:
+  server:
+    port: 9090
+  realm: task-manager-app
+  client:
+    client-id: task-manager-api
+    client-secret: BotPRmQBHUVuIIkH7qj0WRKTIdM5asPa # should be hidden or kept in env variables in real world projects.
+    grant-type: client_credentials
+
+user:
+  server:
+    port: 8000

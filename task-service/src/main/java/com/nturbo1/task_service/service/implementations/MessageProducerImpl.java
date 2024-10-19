@@ -12,16 +12,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MessageProducerImpl implements MessageProducer {
 
-    private final RabbitTemplate rabbitTemplate;
-    @Value("${rabbitmq.topic-exchange.task-due.name}")
-    private String taskDueTopicExchangeName;
-    @Value("${rabbitmq.routing-key.task-due}")
-    private String taskDueRoutingKey;
+	private final RabbitTemplate rabbitTemplate;
 
-    @Override
-    public void sendMessage(String message) {
-        log.debug("MessageProducerImpl.sendMessage(String message) ------- message: {}", message);
-        rabbitTemplate.convertAndSend(taskDueTopicExchangeName, taskDueRoutingKey, message);
-        log.debug("MessageProducerImpl.sendMessage(String message) ------- Message sent successfully");
-    }
+	@Value("${rabbitmq.topic-exchange.task-due.name}")
+	private String taskDueTopicExchangeName;
+
+	@Value("${rabbitmq.routing-key.task-due}")
+	private String taskDueRoutingKey;
+
+	@Override
+	public void sendMessage(String message) {
+		log.debug("MessageProducerImpl.sendMessage(String message) ------- message: {}", message);
+		rabbitTemplate.convertAndSend(taskDueTopicExchangeName, taskDueRoutingKey, message);
+		log.debug("MessageProducerImpl.sendMessage(String message) ------- Message sent successfully");
+	}
 }

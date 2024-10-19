@@ -10,15 +10,15 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @ChangeUnit(id = "create-users-collection", order = "001", author = "nturbo1")
 public class CreateUsersCollectionChange {
 
-    private final MongoTemplate mongoTemplate;
+	private final MongoTemplate mongoTemplate;
 
-    @Execution
-    public void createUsersCollection() {
-        mongoTemplate.createCollection("users");
-    }
+	@Execution
+	public void createUsersCollection() {
+		mongoTemplate.createCollection("users");
+	}
 
-    @RollbackExecution
-    public void rollback() {
-        mongoTemplate.dropCollection("users");
-    }
+	@RollbackExecution
+	public void rollback() {
+		mongoTemplate.dropCollection("users");
+	}
 }

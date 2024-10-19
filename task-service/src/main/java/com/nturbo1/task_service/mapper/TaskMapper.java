@@ -13,16 +13,18 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
 
-    TaskResponse toResponse(TaskDto dto);
-    List<TaskResponse> toResponseList(List<TaskDto> dtoList);
+	TaskResponse toResponse(TaskDto dto);
 
-    TaskDto toDto(Task model);
-    List<TaskDto> toDtoList(List<Task> modelList);
+	List<TaskResponse> toResponseList(List<TaskDto> dtoList);
 
-    TaskDto toDto(TaskRequest request);
+	TaskDto toDto(Task model);
 
-    Task toModel(TaskDto dto);
+	List<TaskDto> toDtoList(List<Task> modelList);
 
-    @Mapping(source = "id", target = "id", ignore = true)
-    Task updateFromDto(TaskDto dto, @MappingTarget Task model);
+	TaskDto toDto(TaskRequest request);
+
+	Task toModel(TaskDto dto);
+
+	@Mapping(source = "id", target = "id", ignore = true)
+	Task updateFromDto(TaskDto dto, @MappingTarget Task model);
 }

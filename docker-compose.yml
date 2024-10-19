@@ -12,15 +12,15 @@ services:
     networks:
       - app-network
 
-  redis:
-    image: "redis:alpine"
-    container_name: redis_server
-    ports:
-      - ${REDIS_HOST_PORT}:${REDIS_CONTAINER_PORT}
-    volumes:
-      - redis:/data
-    networks:
-      - app-network
+#  redis:
+#    image: "redis:alpine"
+#    container_name: redis_server
+#    ports:
+#      - ${REDIS_HOST_PORT}:${REDIS_CONTAINER_PORT}
+#    volumes:
+#      - redis:/data
+#    networks:
+#      - app-network
 
   rabbitmq:
     container_name: "rabbit-mq"
@@ -41,10 +41,27 @@ services:
     networks:
       - app-network
 
+  keycloak:
+    container_name: "keycloak"
+    image: quay.io/keycloak/keycloak:25.0.6
+    environment:
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+    ports:
+      - ${KEYCLOAK_HOST_PORT}:${KEYCLOAK_CONTAINER_PORT}
+    volumes:
+      - keycloak:/data
+    networks:
+      - app-network
+    command:
+      - "start-dev"
+
+
 volumes:
   mongo:
-  redis:
+#  redis:
   rabbitmq:
+  keycloak:
 
 networks:
   app-network:

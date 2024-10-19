@@ -15,26 +15,27 @@ import java.util.Objects;
 @Slf4j
 public class GlobalGatewayExceptionHandler implements ErrorWebExceptionHandler {
 
+	@Override
+	public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
 
-    @Override
-    public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+		exchange.getResponse().setStatusCode(ExceptionHttpStatusCodeMapper.getHttpStatus(ex));
+		exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
-        exchange.getResponse().setStatusCode(ExceptionHttpStatusCodeMapper.getHttpStatus(ex));
-        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
+		ErrorResponseBody responseBody = createErrorResponseBody(exchange, ex);
 
-        ErrorResponseBody responseBody = createErrorResponseBody(exchange, ex);
+		byte[] bytes = responseBody.toString().getBytes();
+		return exchange
+				.getResponse()
+				.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(bytes)));
+	}
 
-        byte[] bytes = responseBody.toString().getBytes();
-        return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(bytes)));
-    }
+	private ErrorResponseBody createErrorResponseBody(ServerWebExchange exchange, Throwable ex) {
 
-    private ErrorResponseBody createErrorResponseBody(ServerWebExchange exchange, Throwable ex) {
-
-        return ErrorResponseBody.builder()
-                .timestamp(LocalDateTime.now())
-                .status(Objects.requireNonNull(exchange.getResponse().getStatusCode()).value())
-                .error(ex.getMessage())
-                .path(exchange.getRequest().getPath().toString())
-                .build();
-    }
+		return ErrorResponseBody.builder()
+				.timestamp(LocalDateTime.now())
+				.status(Objects.requireNonNull(exchange.getResponse().getStatusCode()).value())
+				.error(ex.getMessage())
+				.path(exchange.getRequest().getPath().toString())
+				.build();
+	}
 }

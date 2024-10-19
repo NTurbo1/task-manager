@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends MongoRepository<Task, String> {
 
-    List<Task> findAllByAssigneeUserId(String assigneeUserId);
+	List<Task> findAllByAssigneeUserId(String assigneeUserId);
 }

@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface TaskService {
 
-    List<TaskDto> getAllUserTasks(String userId);
+	List<TaskDto> getAllUserTasks(String userId);
 
-    TaskDto addTask(TaskDto taskDto);
+	TaskDto addTask(TaskDto taskDto);
 
-    TaskDto updateTask(String taskId, TaskDto taskDto);
+	TaskDto updateTask(String taskId, TaskDto taskDto);
 
-    void deleteTask(String taskId);
+	void deleteTask(String taskId);
 }

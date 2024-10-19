@@ -14,25 +14,31 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition
 public class OpenApiConfigs {
 
-    @Bean
-    public OpenAPI customOpenAPI(@Value("${openapi.service.title}") String serviceTitle,
-                                 @Value("${openapi.service.version}") String serviceVersion) {
-        return new OpenAPI()
-                .info(new Info()
-                        .title(serviceTitle)
-                        .version(serviceVersion)
-                        .summary("Documentation API gateway v" + serviceVersion)
-                        .description("This is Gateway API. It contains endpoints for user authentication/authorization " +
-                                "and user registration.")
-                );
-    }
+	@Bean
+	public OpenAPI customOpenAPI(
+			@Value("${openapi.service.title}") String serviceTitle,
+			@Value("${openapi.service.version}") String serviceVersion) {
+		return new OpenAPI()
+				.info(
+						new Info()
+								.title(serviceTitle)
+								.version(serviceVersion)
+								.summary("Documentation API gateway v" + serviceVersion)
+								.description(
+										"This is Gateway API. It contains endpoints for user authentication/authorization "
+												+ "and user registration."));
+	}
 
-    @Bean
-    public RouteLocator routeLocator(RouteLocatorBuilder builder) {
-        return builder
-                .routes()
-                .route(r -> r.path("/v3/api-docs/user-service").and().method(HttpMethod.GET).uri("lb:http://USER-SERVICE"))
-                .build();
-    }
-
+	@Bean
+	public RouteLocator routeLocator(RouteLocatorBuilder builder) {
+		return builder
+				.routes()
+				.route(
+						r ->
+								r.path("/v3/api-docs/user-service")
+										.and()
+										.method(HttpMethod.GET)
+										.uri("lb:http://USER-SERVICE"))
+				.build();
+	}
 }

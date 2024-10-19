@@ -11,18 +11,17 @@ import java.util.List;
 @Configuration
 public class CustomCorsConfigs extends CorsConfiguration {
 
-    @Bean
-    public CorsWebFilter corsFilter()
-    {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials( true );
-        config.setAllowedOriginPatterns(List.of( "*" ));
-        config.setAllowedMethods( List.of( "GET", "POST", "PUT", "DELETE", "OPTIONS" ) );
-        config.setAllowedHeaders( List.of( "origin", "content-type", "accept", "cookie" ) );
+	@Bean
+	public CorsWebFilter corsFilter() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.setAllowedOriginPatterns(List.of("*"));
+		config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+		config.setAllowedHeaders(List.of("origin", "content-type", "accept", "cookie"));
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration( "/**", config );
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", config);
 
-        return new CorsWebFilter(source);
-    }
+		return new CorsWebFilter(source);
+	}
 }

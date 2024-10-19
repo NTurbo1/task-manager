@@ -25,40 +25,43 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class TaskController {
 
-    private final TaskService taskService;
-    private final TaskMapper taskMapper;
+	private final TaskService taskService;
+	private final TaskMapper taskMapper;
 
-    @GetMapping("/tasks/user/{userId}")
-    public ResponseEntity<List<TaskResponse>> getAllUserTasks(@PathVariable("userId") String userId) {
-        log.debug("TaskController.getUserTasks(String userId) ------- userId: {}", userId);
-        List<TaskResponse> allUserTasks = taskMapper.toResponseList(
-                taskService.getAllUserTasks(userId)
-        );
+	@GetMapping("/tasks/user/{userId}")
+	public ResponseEntity<List<TaskResponse>> getAllUserTasks(@PathVariable("userId") String userId) {
+		log.debug("TaskController.getUserTasks(String userId) ------- userId: {}", userId);
+		List<TaskResponse> allUserTasks =
+				taskMapper.toResponseList(taskService.getAllUserTasks(userId));
 
-        return ResponseEntity.ok(allUserTasks);
-    }
+		return ResponseEntity.ok(allUserTasks);
+	}
 
-    @PostMapping("/tasks")
-    public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest request) {
-        log.debug("TaskController.createTask(TaskRequest request) ------ request: {}", request);
-        TaskDto createdTask = taskService.addTask(taskMapper.toDto(request));
+	@PostMapping("/tasks")
+	public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest request) {
+		log.debug("TaskController.createTask(TaskRequest request) ------ request: {}", request);
+		TaskDto createdTask = taskService.addTask(taskMapper.toDto(request));
 
-        return ResponseEntity.ok(taskMapper.toResponse(createdTask));
-    }
+		return ResponseEntity.ok(taskMapper.toResponse(createdTask));
+	}
 
-    @PutMapping("/tasks/{taskId}")
-    public ResponseEntity<TaskResponse> updateTask(@PathVariable("taskId") String taskId, @RequestBody TaskRequest request) {
-        log.debug("TaskController.updateTask(String taskId, TaskRequest request) ------ taskId: {}, request: {}", taskId, request);
-        TaskDto updatedTask = taskService.updateTask(taskId, taskMapper.toDto(request));
+	@PutMapping("/tasks/{taskId}")
+	public ResponseEntity<TaskResponse> updateTask(
+			@PathVariable("taskId") String taskId, @RequestBody TaskRequest request) {
+		log.debug(
+				"TaskController.updateTask(String taskId, TaskRequest request) ------ taskId: {}, request: {}",
+				taskId,
+				request);
+		TaskDto updatedTask = taskService.updateTask(taskId, taskMapper.toDto(request));
 
-        return ResponseEntity.ok(taskMapper.toResponse(updatedTask));
-    }
+		return ResponseEntity.ok(taskMapper.toResponse(updatedTask));
+	}
 
-    @DeleteMapping("/tasks/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable("taskId") String taskId) {
-        log.debug("TaskController.deleteTask(String taskId) ------ taskId: {}", taskId);
-        taskService.deleteTask(taskId);
+	@DeleteMapping("/tasks/{taskId}")
+	public ResponseEntity<Void> deleteTask(@PathVariable("taskId") String taskId) {
+		log.debug("TaskController.deleteTask(String taskId) ------ taskId: {}", taskId);
+		taskService.deleteTask(taskId);
 
-        return ResponseEntity.noContent().build();
-    }
+		return ResponseEntity.noContent().build();
+	}
 }

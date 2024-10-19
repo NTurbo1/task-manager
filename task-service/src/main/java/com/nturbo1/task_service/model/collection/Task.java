@@ -11,24 +11,24 @@ import java.time.LocalDate;
 @Document(collection = "tasks")
 public class Task {
 
-    @Id
-    private String id;
+	@Id
+	private String id;
 
-    @Field
-    private String title;
+	@Field
+	private String title;
 
-    @Field
-    private String description;
+	@Field
+	private String description;
 
-    @Field
-    private String status;
+	@Field
+	private String status;
 
-    @Field
-    private LocalDate dueDate;
+	@Field
+	private LocalDate dueDate;
 
-    @Field
-    private String priority;
+	@Field
+	private String priority;
 
-    @Field
-    private String assigneeUserId;
+	@Field
+	private String assigneeUserId;
 }

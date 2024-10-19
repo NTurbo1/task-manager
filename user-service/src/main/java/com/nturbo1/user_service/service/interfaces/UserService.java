@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface UserService {
 
-    List<UserDto> getAllUsers();
+	List<UserDto> getAllUsers();
 
-    UserDto getUserById(String id);
+	UserDto getUserById(String id);
 
-    UserAuthDto getUserAuthByEmail(String email);
+	UserAuthDto getUserAuthByEmail(String email);
 
-    UserDto createUser(AddUserDto userDto);
+	UserDto createUser(AddUserDto userDto);
 
-    UserDto updateUser(String userId, UserDto userDto);
+	UserDto updateUser(String userId, UserDto userDto);
 
-    void deleteUser(String id);
+	void deleteUser(String id);
 }

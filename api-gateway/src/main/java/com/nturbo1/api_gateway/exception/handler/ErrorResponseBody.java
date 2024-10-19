@@ -9,19 +9,27 @@ import java.time.LocalDateTime;
 @Builder
 public class ErrorResponseBody {
 
-    private LocalDateTime timestamp;
-    private int status;
-    private String error;
-    private String path;
+	private LocalDateTime timestamp;
+	private int status;
+	private String error;
+	private String path;
 
-    @Override
-    public String toString() {
-        // In JSON format
-        return "{" +
-                    "\"timestamp\": \"" + timestamp + "\"," +
-                    "\"status\": \"" + status + "\"," +
-                    "\"error\": \"" + error + "\"," +
-                    "\"path\": \"" + path + "\"" +
-                "}";
-    }
+	@Override
+	public String toString() {
+		// In JSON format
+		return "{"
+				+ "\"timestamp\": \""
+				+ timestamp
+				+ "\","
+				+ "\"status\": \""
+				+ status
+				+ "\","
+				+ "\"error\": \""
+				+ error
+				+ "\","
+				+ "\"path\": \""
+				+ path
+				+ "\""
+				+ "}";
+	}
 }

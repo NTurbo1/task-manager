@@ -12,16 +12,16 @@ import java.util.Set;
 @ToString
 public class User {
 
-    @Id
-    private String id;
+	@Id
+	private String id;
 
-    private String firstName;
+	private String firstName;
 
-    private String lastName;
+	private String lastName;
 
-    private String email;
+	private String email;
 
-    private String password;
+	private String password;
 
-    private Set<Role> roles;
+	private Set<Role> roles;
 }

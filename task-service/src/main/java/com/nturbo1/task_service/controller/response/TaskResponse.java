@@ -9,17 +9,17 @@ import java.time.LocalDate;
 @Setter
 public class TaskResponse {
 
-    private String id;
+	private String id;
 
-    private String title;
+	private String title;
 
-    private String description;
+	private String description;
 
-    private String status;
+	private String status;
 
-    private LocalDate dueDate;
+	private LocalDate dueDate;
 
-    private String priority;
+	private String priority;
 
-    private String assigneeUserId;
+	private String assigneeUserId;
 }
